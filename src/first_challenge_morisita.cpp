@@ -2,6 +2,7 @@
 FirstChallenge::FirstChallenge():private_nh("~")
 {
     private_nh.param("hz",hz,{10});
+    private_nh.param("turn_flag",turn_flag,{false});
     sub_odometry=nh.subscribe("/roomba/odometry",100,&FirstChallenge::odometry_callback,this);
     pub_roomba_ctrl=nh.advertise<roomba_500driver_meiji::RoombaCtrl>("/roomba/control",1);
 }
@@ -23,7 +24,30 @@ void FirstChallenge::turn()
 
     std::cout<<"yaw = "<<y<<std::endl;
 
+    if((turn_start_point-turn_start_point*0.01)<y && y<(turn_start_point+0.01*turn_start_point)){
+        turn_flag=false;
+    }
+
     pub_roomba_ctrl.publish(cmd_vel);
+}
+
+void FirstChallenge::forward()
+{
+    if(0){
+        //
+    }else{
+        tf::Quaternion quat(odometry.pose.pose.orientation.x,odometry.pose.pose.orientation.y,odometry.pose.pose.orientation.z,odometry.pose.pose.orientation.w);
+        tf::Matrix3x3(quat).getRPY(r,p,y);
+
+        turn_start_point=y;
+        turn_flag=true;
+    }
+}
+
+void FirstChallenge::run()
+{
+    if(turn_flag) turn();
+    else forward();
 }
 
 void FirstChallenge::process()
@@ -31,7 +55,7 @@ void FirstChallenge::process()
     ros::Rate loop_rate(hz);
     while(ros::ok())
     {
-        turn();
+        run();
 
         ros::spinOnce();
         loop_rate.sleep();

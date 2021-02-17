@@ -18,10 +18,14 @@ class FirstChallenge
     private:
         //void laser_callback(const )
         void turn();
+        void forward();
+        void run();
         void odometry_callback(const nav_msgs::Odometry::ConstPtr &);
 
         int hz;
         double r,p,y;
+        int turn_flag;
+        double turn_start_point;
 
         ros::Publisher pub_roomba_ctrl;
         ros::Subscriber sub_odometry;
