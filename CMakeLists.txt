@@ -10,6 +10,8 @@ SET(CMAKE_CXX_FLAGS "-std=c++11 -O2 -g -Wall ${CMAKE_CXX_FLAGS}")
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   roomba_500driver_meiji
+  nav_msgs
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
