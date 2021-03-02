@@ -23,7 +23,7 @@ class FirstChallenge
         void odometry_callback(const nav_msgs::Odometry::ConstPtr &);
 
         int hz;
-        double r,p,y;
+        double roll,pitch,yaw;
         int turn_flag;
         double turn_start_point;
 
