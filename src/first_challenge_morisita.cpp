@@ -25,7 +25,7 @@ void FirstChallenge::turn()
 
     std::cout<<"yaw = "<<yaw<<std::endl;
 
-    if((turn_start_point-0.1)<yaw){
+    if((turn_start_point-0.1)<yaw && yaw<turn_start_point){
         turn_flag=false;
         cmd_vel.cntl.angular.z=0;
     }
