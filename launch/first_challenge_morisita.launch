@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <launch>
 <node pkg="first_challenge_morisita" name="first_challenge_morisita" type="first_challenge_morisita" output="screen"/>
+<node pkg="roomba_500driver_meiji" name="roomba_500driver_meiji" type="main500" />
 </launch>
