@@ -65,9 +65,9 @@ void FirstChallenge::forward()
 
 int FirstChallenge::read()
 {
-    if(laser.intensities[sizeof(laser.intensities)/sizeof(laser.intensities[0])/2] < 0.5){
+    if(laser.ranges[sizeof(laser.ranges)/sizeof(laser.ranges[0])/2] < 0.2){
         return true;
-        std::cout<<"laser.intensities = "<<laser.intensities[sizeof(laser.intensities)/sizeof(laser.intensities[0])/2]<<std::endl;
+        std::cout<<"laser.ranges = "<<laser.ranges[sizeof(laser.ranges)/sizeof(laser.langes[0])/2]<<std::endl;
     }else return false;
 }
 
