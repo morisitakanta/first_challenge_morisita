@@ -19,6 +19,7 @@ class FirstChallenge
         void turn();
         void forward();
         void run();
+        int read();
         void odometry_callback(const nav_msgs::Odometry::ConstPtr &);
         void laser_callback(const sensor_msgs::LaserScan::ConstPtr &);
 
@@ -26,6 +27,7 @@ class FirstChallenge
         double roll,pitch,yaw;
         int turn_flag;
         double turn_start_point;
+        int runnnig_flag;
 
         ros::Publisher pub_roomba_ctrl;
         ros::Subscriber sub_odometry;
