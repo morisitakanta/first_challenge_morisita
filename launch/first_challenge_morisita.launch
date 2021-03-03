@@ -2,4 +2,5 @@
 <launch>
 <node pkg="first_challenge_morisita" name="first_challenge_morisita" type="first_challenge_morisita" output="screen"/>
 <node pkg="roomba_500driver_meiji" name="roomba_500driver_meiji" type="main500" />
+<node pkg="urg_node" name="urg_node" type="urg_node" />
 </launch>

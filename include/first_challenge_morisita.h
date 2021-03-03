@@ -6,7 +6,7 @@
 #include "roomba_500driver_meiji/RoombaCtrl.h"
 #include "nav_msgs/Odometry.h"
 #include "tf/tf.h"
-//#include "sensor_msgs/LaserScan.h"
+#include "sensor_msgs/LaserScan.h"
 
 
 class FirstChallenge
@@ -16,11 +16,11 @@ class FirstChallenge
         void process();
 
     private:
-        //void laser_callback(const )
         void turn();
         void forward();
         void run();
         void odometry_callback(const nav_msgs::Odometry::ConstPtr &);
+        void laser_callback(const sensor_msgs::LaserScan::ConstPtr &);
 
         int hz;
         double roll,pitch,yaw;
@@ -29,9 +29,11 @@ class FirstChallenge
 
         ros::Publisher pub_roomba_ctrl;
         ros::Subscriber sub_odometry;
+        ros::Subscriber sub_laser;
         ros::NodeHandle nh;
         ros::NodeHandle private_nh;
         nav_msgs::Odometry odometry;
+        sensor_msgs::LaserScan laser;
 
 };
 #endif
