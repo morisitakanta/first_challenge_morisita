@@ -5,6 +5,8 @@ FirstChallenge::FirstChallenge():private_nh("~")
     private_nh.param("turn_flag",turn_flag,{false});
     private_nh.param("runnnig_flag",runnnig_flag,{true});
     private_nh.param("forward_mode",forward_mode,{0});
+    private_nh.param("forward_distance",forward_distance,{1});
+    private_nh.param("laser_distance",laser_distance,{0.5});
     sub_odometry=nh.subscribe("/roomba/odometry",100,&FirstChallenge::odometry_callback,this);
     sub_laser=nh.subscribe("/scan",100,&FirstChallenge::laser_callback,this);
     pub_roomba_ctrl=nh.advertise<roomba_500driver_meiji::RoombaCtrl>("/roomba/control",1);
@@ -52,7 +54,7 @@ void FirstChallenge::forward()
     tf::Matrix3x3(quat).getRPY(roll,pitch,yaw);
     turn_start_point=yaw;
 
-    if(odometry.pose.pose.position.x > 0.1 && forward_mode==0){
+    if(odometry.pose.pose.position.x > forward_distance && forward_mode==0){
         turn_flag=true;
         cmd_vel.cntl.linear.x=0;
     }
@@ -67,7 +69,7 @@ void FirstChallenge::forward()
 int FirstChallenge::read()
 {
     if(laser.ranges.size()!=0){
-        if(laser.ranges[540] < 0.5){
+        if(laser.ranges[540] < laser_distance){
             return true;
             std::cout<<"laser.ranges = "<<laser.ranges[540]<<std::endl;
         }else return false;

@@ -28,6 +28,9 @@ class FirstChallenge
         int turn_flag;
         double turn_start_point;
         int runnnig_flag;
+        int forward_mode;
+        double forward_distance;
+        double laser_distance;
 
         ros::Publisher pub_roomba_ctrl;
         ros::Subscriber sub_odometry;
