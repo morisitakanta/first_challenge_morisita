@@ -30,12 +30,13 @@ void FirstChallenge::turn()
     tf::Quaternion quat(odometry.pose.pose.orientation.x,odometry.pose.pose.orientation.y,odometry.pose.pose.orientation.z,odometry.pose.pose.orientation.w);
     tf::Matrix3x3(quat).getRPY(roll,pitch,yaw);
 
-    std::cout<<"yaw = "<<yaw<<std::endl;
+    // std::cout<<"yaw = "<<yaw<<std::endl;
 
     if((turn_start_point-0.2)<yaw && yaw<turn_start_point){
         turn_flag=false;
         cmd_vel.cntl.angular.z=0;
         odometry.pose.pose.position.x=0;
+        std::cout<<"position.x = "<<odometry.pose.pose.position.x<<std::endl;
     }
 
     pub_roomba_ctrl.publish(cmd_vel);
@@ -45,7 +46,7 @@ void FirstChallenge::forward()
 {
     roomba_500driver_meiji::RoombaCtrl cmd_vel;
     cmd_vel.mode=11;
-    cmd_vel.cntl.linear.x=0.2;
+    cmd_vel.cntl.linear.x=0.1;
     cmd_vel.cntl.angular.z=0;
     tf::Quaternion quat(odometry.pose.pose.orientation.x,odometry.pose.pose.orientation.y,odometry.pose.pose.orientation.z,odometry.pose.pose.orientation.w);
     tf::Matrix3x3(quat).getRPY(roll,pitch,yaw);
@@ -65,9 +66,11 @@ void FirstChallenge::forward()
 
 int FirstChallenge::read()
 {
-    if(laser.ranges[sizeof(laser.ranges)/sizeof(laser.ranges[0])/2] < 0.2){
-        return true;
-        std::cout<<"laser.ranges = "<<laser.ranges[sizeof(laser.ranges)/sizeof(laser.ranges[0])/2]<<std::endl;
+    if(laser.ranges.size()!=0){
+        if(laser.ranges[540] < 0.2){
+            std::cout<<"laser.ranges = "<<laser.ranges[540]<<std::endl;
+            return true;
+        }else return false;
     }else return false;
 }
 
@@ -80,8 +83,8 @@ void FirstChallenge::run()
 void FirstChallenge::process()
 {
     ros::Rate loop_rate(hz);
-    std::cout<<"sleep for 5s"<<std::endl;
-    ros::Duration(5).sleep();
+    std::cout<<"sleep for 2s"<<std::endl;
+    ros::Duration(2).sleep();
     while(ros::ok() && runnnig_flag)
     {
         run();
